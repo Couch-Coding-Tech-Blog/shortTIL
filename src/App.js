@@ -1,10 +1,10 @@
-import React from 'react';
-import logo from './logo.svg';
+import React from "react";
+import NavBar from "./components/nav-bar";
 
 function App() {
   return (
     <div className="App">
-      React Redux App
+      <NavBar />
     </div>
   );
 }
