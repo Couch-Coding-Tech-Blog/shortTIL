@@ -6,14 +6,24 @@ import CreateForm from "./CreateForm";
 
 const { Header } = Layout;
 
-const Navbar = (props) => {
+const Navbar = ({ onAdd }) => {
   const [visible, setVisible] = useState(false);
   const showModal = () => {
     setVisible(true);
   };
 
   const onCreate = (values) => {
-    console.log("받은 새 글: ", values);
+    const today = new Date();
+    const month = `0${today.getMonth() + 1}`.slice(-2);
+    const date = `0${today.getDate()}`.slice(-2);
+    const newPost = {
+      id: Date.now(),
+      title: values.title,
+      author: "anonymous",
+      published_at: `${today.getFullYear()}-${month}-${date}`,
+      body: values.content,
+    };
+    onAdd(newPost);
     setVisible(false);
   };
 

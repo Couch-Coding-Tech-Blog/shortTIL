@@ -4,8 +4,8 @@ import Main from "./pages/Main";
 import "antd/dist/antd.css";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Main />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Main />,
+  // </React.StrictMode>,
   document.getElementById("root")
 );

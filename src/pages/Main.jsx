@@ -12,15 +12,24 @@ function Main() {
       setPostData(res.data);
     }
     getData();
-    console.log("1", postData);
+    // console.log("1", postData);
   }, []);
 
-  console.log("2", postData);
+  // console.log("2", postData);
+
+  const onAdd = (newPost) => {
+    axios.post("http://localhost:4000/posts", { ...newPost });
+  };
 
   return (
     <div>
-      <Navbar></Navbar>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
+      <Navbar onAdd={onAdd} />
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+        }}
+      >
         {postData.map((post) => (
           <CardComponent
             key={post.id}
