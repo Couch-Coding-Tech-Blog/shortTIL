@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import CardComponent from "../components/CardComponent";
-import { Row, Col, Space } from "antd";
-=======
-import React, {useState, useEffect} from 'react';
-import Navbar from '../components/Navbar';
-import CardComponent from '../components/CardComponent';
-import {Row, Col, Button} from 'antd';
-import {CaretRightOutlined} from '@ant-design/icons';
->>>>>>> 9195a0f5dace19046799790712a91921e8891eeb
+import { Row, Col, Button } from "antd";
+import { CaretRightOutlined } from "@ant-design/icons";
 // import axios from 'axios';
 
 function Main() {
@@ -29,14 +22,9 @@ function Main() {
 
   return (
     <div>
-<<<<<<< HEAD
-      <Navbar />
-      <Row>
-=======
       <Navbar></Navbar>
       <Button icon={<CaretRightOutlined />}></Button>
-      <Row >
->>>>>>> 9195a0f5dace19046799790712a91921e8891eeb
+      <Row>
         <Col span={6}>
           <CardComponent></CardComponent>
         </Col>
