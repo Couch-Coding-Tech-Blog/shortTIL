@@ -1,29 +1,33 @@
-import React, {useState, useEffect} from 'react';
-import Navbar from '../components/NavBar/Navbar';
-import CardComponent from '../components/CardComponent';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import Navbar from "../components/NavBar/Navbar";
+import CardComponent from "../components/CardComponent";
+import axios from "axios";
 
 function Main() {
   const [postData, setPostData] = useState([]);
 
   useEffect(() => {
-    async function getData(){
+    async function getData() {
       const res = await axios.get("http://localhost:4000/posts");
       setPostData(res.data);
     }
     getData();
-    console.log('1', postData);
-  }, [])
+    console.log("1", postData);
+  }, []);
 
-  console.log('2', postData);
+  console.log("2", postData);
 
   return (
     <div>
       <Navbar></Navbar>
-      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around" }}>
-      {postData.map(post => 
-        <CardComponent title={post.title} body={post.body}></CardComponent>
-      )}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
+        {postData.map((post) => (
+          <CardComponent
+            key={post.id}
+            title={post.title}
+            body={post.body}
+          ></CardComponent>
+        ))}
       </div>
     </div>
   );

@@ -2,5 +2,26 @@
 
 .header {
   background-color: white;
-  box-shadow: 1px 5px 15px 3px #5b5b5b;
+  box-shadow: 1px 5px 15px 3px #d0d0d0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
+  margin-bottom: 4em;
 }
+
+.header_logo {
+  /* color: #d43f44; */
+  color: #1890ff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.header_write-btn {
+  border: 0;
+  /* transition: color 0.2s ease-in; */
+}
+
+/* .header_write-btn:hover {
+  color: #d43f44;
+} */
