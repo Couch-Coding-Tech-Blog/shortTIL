@@ -15,9 +15,9 @@ function Navbar() {
         shape="round"
         icon={<EditOutlined />}
       /> */}
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
+      {/* <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
         <button>버튼</button>
-      </Menu>
+      </Menu> */}
     </Header>
   );
 }
