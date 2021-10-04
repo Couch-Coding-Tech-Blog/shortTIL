@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import Navbar from '../components/Navbar';
-import CardComponent from '../components/CardComponent';
-import {Row, Col, Space} from 'antd';
+import React, { useState, useEffect } from "react";
+import Navbar from "../components/Navbar/Navbar";
+import CardComponent from "../components/CardComponent";
+import { Row, Col, Space } from "antd";
 // import axios from 'axios';
 
 function Main() {
@@ -21,8 +21,8 @@ function Main() {
 
   return (
     <div>
-      <Navbar></Navbar>
-      <Row >
+      <Navbar />
+      <Row>
         <Col span={6}>
           <CardComponent></CardComponent>
         </Col>

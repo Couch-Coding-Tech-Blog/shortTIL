@@ -1,0 +1,6 @@
+@import "~antd/dist/antd.css";
+
+.header {
+  background-color: white;
+  box-shadow: 1px 5px 15px 3px #5b5b5b;
+}
