@@ -34,6 +34,7 @@
     ]
   },
   "devDependencies": {
+    "@ant-design/icons": "^4.7.0",
     "antd": "^4.16.13",
     "axios": "^0.22.0",
     "json-server": "^0.16.3",

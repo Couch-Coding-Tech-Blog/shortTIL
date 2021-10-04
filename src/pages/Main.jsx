@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import Navbar from '../components/Navbar';
 import CardComponent from '../components/CardComponent';
-import {Row, Col, Space} from 'antd';
+import {Row, Col, Button} from 'antd';
+import {CaretRightOutlined} from '@ant-design/icons';
 // import axios from 'axios';
 
 function Main() {
@@ -22,6 +23,7 @@ function Main() {
   return (
     <div>
       <Navbar></Navbar>
+      <Button icon={<CaretRightOutlined />}></Button>
       <Row >
         <Col span={6}>
           <CardComponent></CardComponent>
