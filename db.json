@@ -1,0 +1,19 @@
+{
+  "posts": [
+    { 
+			"id": 1, 
+			"title": "포트폴리오 6주 만에 준비 방법", 
+			"author": "couchcoding", 
+			"published_at": "2021-09-30T09:38:55.080Z",
+			"body": "☕️ API 란? == 약속\n\nAPI 란 쉽게 설명하면 클라이언트와 백엔드 간의 약속이라고 생각하면 좋다.",
+			"tags": ["취업", "후기"]
+		},
+		{ 
+			"id": 2, 
+			"title": "일주일 동안 React 협업 프로젝트 맛보기", 
+			"author": "devfolioh", 
+			"published_at": "2021-09-28T08:17:39.810Z",
+			"body": "팀으로 모여 React로 협업 프로젝트를 만들고 싶은 멤버를 모집합니다. DevFolio x Couch Coding 콜라보 프로젝트로, Couch Coding 멘토가 무료로 가이드를 제공합니다."
+		}
+  ]
+}
