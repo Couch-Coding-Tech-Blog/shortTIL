@@ -1,13 +1,29 @@
-import React from 'react';
-import { Card } from 'antd';
+import React, {useState} from 'react';
+import { Card, Modal } from 'antd';
+
+const { Meta } = Card;
 
 function CardComponent() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   return (
-      <Card title="Default size card" style={{ width: 300 }}>
-        <p>Card content</p>
-        <p>Card content</p>
-        <p>Card content</p>
+    <div>
+      <Card
+        hoverable
+        style={{ width: 300, margin: "1rem" }}
+        cover={<img alt="example" src="https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1180&q=80"/>}
+        onClick={() => setIsModalVisible(true)}
+      >
+        <Meta title="Europe Street beat" description="www.instagram.com" />
       </Card>
+      <Modal title="Basic Modal" visible={isModalVisible} onCancel={() => setIsModalVisible(false)} onOk={() => setIsModalVisible(false)}>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </Modal>
+    </div>
+    
+      
   );
 }
 
