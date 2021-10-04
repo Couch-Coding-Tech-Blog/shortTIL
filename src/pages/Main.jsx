@@ -5,6 +5,7 @@ import axios from "axios";
 
 function Main() {
   const [postData, setPostData] = useState([]);
+  const [postNum, setPostNum] = useState(0);
 
   useEffect(() => {
     async function getData() {
@@ -12,13 +13,11 @@ function Main() {
       setPostData(res.data);
     }
     getData();
-    // console.log("1", postData);
-  }, []);
-
-  // console.log("2", postData);
+  }, [postNum]);
 
   const onAdd = (newPost) => {
     axios.post("http://localhost:4000/posts", { ...newPost });
+    setPostNum(postNum + 1);
   };
 
   return (
