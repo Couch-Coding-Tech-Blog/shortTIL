@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/NavBar/Navbar";
 import CardComponent from "../components/CardComponent";
+import Grass from "../components/NavBar/Grass";
 import axios from "axios";
 
 function Main() {
@@ -23,6 +24,7 @@ function Main() {
   return (
     <div>
       <Navbar onAdd={onAdd} />
+      <Grass postData = {postData}/>
       <div
         style={{
           display: "grid",
