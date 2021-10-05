@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { Card, Modal, Button, Form, Input } from 'antd';
-import Editform from "./editform";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
