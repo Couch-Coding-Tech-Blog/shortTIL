@@ -10,7 +10,7 @@ function Main() {
 
   useEffect(() => {
     async function getData() {
-      const res = await axios.get("http://localhost:4000/posts");
+      const res = await axios.get("http://localhost:4000/posts?_sort=id&_order=desc");
       setPostData(res.data);
     }
     getData();
@@ -38,8 +38,7 @@ function Main() {
               title={post.title}
               body={post.body}
             ></CardComponent>
-          ))
-          .reverse()}
+          ))}
       </div>
     </div>
   );
