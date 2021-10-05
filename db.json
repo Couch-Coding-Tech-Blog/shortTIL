@@ -106,6 +106,20 @@
       "author": "anonymous",
       "published_at": "2021-10-05",
       "body": "테스트해보기"
+    },
+    {
+      "id": 1633396139210,
+      "title": "새글",
+      "author": "anonymous",
+      "published_at": "2021-10-05",
+      "body": "새글새글"
+    },
+    {
+      "id": 1633397021724,
+      "title": "다시또새글",
+      "author": "anonymous",
+      "published_at": "2021-10-05",
+      "body": "새글새글"
     }
   ]
 }

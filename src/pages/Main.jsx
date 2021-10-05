@@ -29,13 +29,15 @@ function Main() {
           gridTemplateColumns: "repeat(4, 1fr)",
         }}
       >
-        {postData.map((post) => (
-          <CardComponent
-            key={post.id}
-            title={post.title}
-            body={post.body}
-          ></CardComponent>
-        ))}
+        {postData
+          .map((post) => (
+            <CardComponent
+              key={post.id}
+              title={post.title}
+              body={post.body}
+            ></CardComponent>
+          ))
+          .reverse()}
       </div>
     </div>
   );
