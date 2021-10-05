@@ -1,11 +1,47 @@
 import React, {useState} from 'react';
-import { Card, Modal } from 'antd';
+import { Card, Modal, Button, Form, Input } from 'antd';
+import Editform from "./editform";
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
+const { TextArea } = Input;
+const { confirm } = Modal;
 const { Meta } = Card;
 
 function CardComponent(props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const { visible, loading } = useState(false);
 
+  function info() {
+    Modal.info({
+      title: '수정 화면 타이틀',
+      icon: false,
+      content: (
+        <div>
+          <p>수정 할 내용</p>
+        </div>
+      ),
+      onOk() {},
+    });
+  }
+
+  function showDeleteConfirm() {
+    confirm({
+      title: '삭제하시겠습니까',
+      icon: <ExclamationCircleOutlined />,
+      content: '',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        console.log('OK');
+        setIsModalVisible(false)
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  }
+  
   return (
     <div>
       <Card
@@ -16,9 +52,18 @@ function CardComponent(props) {
       >
         <Meta title={props.title} description={props.body} />
       </Card>
-      <Modal title={props.title} visible={isModalVisible} onCancel={() => setIsModalVisible(false)} onOk={() => setIsModalVisible(false)}>
-      <p>{props.body}</p>
-    </Modal>
+      <Modal title={props.title} visible={isModalVisible} onCancel={() => setIsModalVisible(false)} onOk={info}
+        footer={[
+        <Button className="header_write-btn" size="medium" onClick={info}>
+          수정
+        </Button>,
+        <Button className="header_write-btn" size="medium" onClick={showDeleteConfirm}>
+          삭제
+        </Button>
+      ]}
+      >
+        <p>{props.body}</p>
+      </Modal>
     </div>  
   );
 }
