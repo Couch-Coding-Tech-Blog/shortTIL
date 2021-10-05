@@ -15,8 +15,10 @@ function Main() {
     getData();
   }, [postNum]);
 
-  const onAdd = (newPost) => {
-    axios.post("http://localhost:4000/posts", { ...newPost });
+  const onAdd = async (newPost) => {
+    await axios.post("http://localhost:4000/posts", {
+      ...newPost,
+    });
     setPostNum(postNum + 1);
   };
 
