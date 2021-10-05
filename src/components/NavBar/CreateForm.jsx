@@ -12,7 +12,7 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
   const [tagsRes, setTagsRes] = useState("");
 
   const showTagAlert = () => {
-    if (tagsRef.current.state.focused) setAlertVisible(false);
+    if (!tagsRef.current.state.focused) setAlertVisible(false);
   };
 
   const createTags = (e) => {
