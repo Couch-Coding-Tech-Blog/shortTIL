@@ -5,7 +5,7 @@ import Grass from "../components/NavBar/Grass";
 import axios from "axios";
 import "./Main.css";
 
-function Main() {
+function Main({ imageUploader }) {
   const [postData, setPostData] = useState([]);
   const [postNum, setPostNum] = useState(0);
 
@@ -28,7 +28,7 @@ function Main() {
 
   return (
     <div>
-      <Navbar onAdd={onAdd} />
+      <Navbar onAdd={onAdd} imageUploader={imageUploader} />
       <Grass postData={postData} />
 
       <div style={{ display: "flex", justifyContent: "center" }}>
