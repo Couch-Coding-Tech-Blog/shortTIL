@@ -6,7 +6,7 @@ import CreateForm from "./CreateForm";
 
 const { Header } = Layout;
 
-const Navbar = ({ onAdd }) => {
+const Navbar = ({ onAdd, imageUploader }) => {
   const [visible, setVisible] = useState(false);
   const showModal = () => {
     setVisible(true);
@@ -23,6 +23,7 @@ const Navbar = ({ onAdd }) => {
       published_at: `${today.getFullYear()}-${month}-${date}`,
       body: values.content,
       tags: values.tags || null,
+      uploaded_images: values.images || null,
     };
     console.log(newPost);
     onAdd(newPost);
@@ -40,6 +41,7 @@ const Navbar = ({ onAdd }) => {
           onClick={showModal}
         />
         <CreateForm
+          imageUploader={imageUploader}
           visible={visible}
           onCreate={onCreate}
           onCancel={() => {

@@ -1,10 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Modal, Form, Input, Alert, Tag, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import "./NavBar.css";
 
 const { TextArea } = Input;
-const CreateForm = ({ visible, onCreate, onCancel }) => {
+const getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+};
+
+const CreateForm = ({ visible, onCreate, onCancel, imageUploader }) => {
   const tagsRef = useRef(null);
   const tagsBoxRef = useRef();
   const [form] = Form.useForm();
@@ -16,62 +25,40 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
       e.preventDefault();
       const value = tagsRef.current.state.value;
       setTags([...tags, value]);
-      // form.resetFields(["tags"]);
-      tagsRef.current.state.value = "";
+      form.resetFields(["tags"]);
+      // tagsRef.current.state.value = "";
       tagsRef.current.focus({
         cursor: "start",
       });
     }
   };
 
-  const getBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([
-    {
-      uid: "-1",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-    {
-      uid: "-xxx",
-      percent: 50,
-      name: "image.png",
-      status: "uploading",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-    {
-      uid: "-5",
-      name: "image.png",
-      status: "error",
-    },
-  ]);
+  const [fileList, setFileList] = useState([]);
 
   const handleCancel = () => {
     setPreviewVisible(false);
   };
   const handlePreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
+    if (!file.url && !file.thumbUrl) {
+      file.thumbUrl = await getBase64(file.file.originFileObj);
     }
-    setPreviewImage(file.url || file.preview);
+    setPreviewImage(file.url || file.thumbUrl);
     setPreviewVisible(true);
-    setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+    setPreviewTitle(file.name);
+  };
+
+  const handleChange = async ({ fileList }) => {
+    const newFileIndex = fileList.length - 1;
+    const uploaded = await imageUploader.upload(
+      fileList[newFileIndex].originFileObj
     );
+    fileList[newFileIndex].url = uploaded.url;
+    setFileList(fileList);
   };
-  const handleChange = ({ fileList }) => {
-    setFileList([{ fileList }]);
-  };
+
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -95,8 +82,10 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
               .filter((node) => node.className.indexOf("ant-tag-hidden") === -1)
               .map((node) => node.innerText);
             values.tags = tagBox;
+            values.images = fileList;
             onCreate(values);
             setTags([]);
+            setFileList([]);
             form.resetFields();
           })
           .catch((info) => {
@@ -160,7 +149,6 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
           className={alertVisible ? "showAlert" : "hideAlert"}
         />
         <Upload
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           listType="picture-card"
           fileList={fileList}
           onPreview={handlePreview}
@@ -174,7 +162,7 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
           footer={null}
           onCancel={handleCancel}
         >
-          <img alt="example" style={{ width: "100%" }} src={previewImage} />
+          <img alt="previewImg" style={{ width: "100%" }} src={previewImage} />
         </Modal>
       </Form>
     </Modal>
