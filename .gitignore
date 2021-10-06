@@ -5,8 +5,7 @@
 /.pnp
 .pnp.js
 
-#API Keys
-.env
+#API keys
 
 # testing
 /coverage

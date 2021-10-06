@@ -27,6 +27,7 @@ const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType }) => {
       published_at: `${today.getFullYear()}-${month}-${date}`,
       body: values.content,
       tags: values.tags || null,
+      uploaded_images: values.images || null,
     };
     console.log(newPost);
     onAdd(newPost);
@@ -35,8 +36,7 @@ const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType }) => {
 
   return (
     <Header className="header">
-      <div className="header_logo">ReactJS Team Project</div>
-
+      <div className="header_logo">숏TIL</div>
       <Input.Group compact style={{ width: "100%", maxWidth: "500px" }}>
         <Select defaultValue="title" onChange={handleSelectChange} value={searchType}>
           <Option value="title">title</Option>
@@ -45,7 +45,6 @@ const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType }) => {
         </Select>
         <Input style={{ width: '50%' }} onChange={handleSearchChange}/>
       </Input.Group>
-
       <div>
         <Button
           className="header_write-btn"
@@ -54,6 +53,7 @@ const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType }) => {
           onClick={showModal}
         />
         <CreateForm
+          imageUploader={imageUploader}
           visible={visible}
           onCreate={onCreate}
           onCancel={() => {

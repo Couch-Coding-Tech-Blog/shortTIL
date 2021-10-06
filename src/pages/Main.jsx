@@ -5,7 +5,7 @@ import Grass from "../components/NavBar/Grass";
 import axios from "axios";
 import "./Main.css";
 
-function Main() {
+function Main({ imageUploader }) {
   const [postData, setPostData] = useState([]);
   const [postNum, setPostNum] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
