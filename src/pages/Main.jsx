@@ -14,7 +14,7 @@ function Main({ imageUploader }) {
   useEffect(() => {
     //searchTerm여부에 따라 전체검색 or 필터검색 실행
     searchTerm ? getFilterData(): getData();
-  }, [searchTerm,searchType,postNum]);
+  }, [searchTerm, searchType, postNum]);
 
   async function getData() {
     const res = await axios.get(
@@ -37,8 +37,8 @@ function Main({ imageUploader }) {
     setPostNum(postNum + 1);
   };
 
-  const handleSearchChange = async(event) => {
-    setSearchTerm(event.target.value)
+  const handleSearchChange = async (event) => {
+    setSearchTerm(event.target.value);
     
   }
   const handleSelectChange = (event) =>{
@@ -48,7 +48,7 @@ function Main({ imageUploader }) {
 
   return (
     <div>
-      <Navbar onAdd={onAdd} handleSearchChange={handleSearchChange} handleSelectChange={handleSelectChange} searchType={searchType}/>
+      <Navbar onAdd={onAdd} handleSearchChange={handleSearchChange} handleSelectChange={handleSelectChange} searchType={searchType} imageUploader={imageUploader}/>
       <Grass postData={postData} />
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="cards">
@@ -57,6 +57,7 @@ function Main({ imageUploader }) {
               key={post.id}
               title={post.title}
               body={post.body}
+              imageUploader={imageUploader}
             ></CardComponent>
           ))}
         </div>
