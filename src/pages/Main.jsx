@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/NavBar/Navbar";
 import CardComponent from "../components/CardComponent";
+import Grass from "../components/NavBar/Grass";
 import axios from "axios";
 import "./Main.css";
 
@@ -10,7 +11,9 @@ function Main() {
 
   useEffect(() => {
     async function getData() {
-      const res = await axios.get("http://localhost:4000/posts");
+      const res = await axios.get(
+        "http://localhost:4000/posts?_sort=id&_order=desc"
+      );
       setPostData(res.data);
     }
     getData();
@@ -26,17 +29,17 @@ function Main() {
   return (
     <div>
       <Navbar onAdd={onAdd} />
-      <div style={{display: "flex", justifyContent: "center"}}>
+      <Grass postData={postData} />
+
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="cards">
-          {postData
-            .map((post) => (
-              <CardComponent
-                key={post.id}
-                title={post.title}
-                body={post.body}
-              ></CardComponent>
-            ))
-            .reverse()}
+          {postData.map((post) => (
+            <CardComponent
+              key={post.id}
+              title={post.title}
+              body={post.body}
+            ></CardComponent>
+          ))}
         </div>
       </div>
     </div>
