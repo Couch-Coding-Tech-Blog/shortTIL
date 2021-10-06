@@ -10,7 +10,9 @@ function Main() {
 
   useEffect(() => {
     async function getData() {
-      const res = await axios.get("http://localhost:4000/posts?_sort=id&_order=desc");
+      const res = await axios.get(
+        "http://localhost:4000/posts?_sort=id&_order=desc"
+      );
       setPostData(res.data);
     }
     getData();
@@ -24,19 +26,19 @@ function Main() {
   return (
     <div>
       <Navbar onAdd={onAdd} />
-      <Grass postData = {postData}/>
-      <div style={{display: "flex", justifyContent: "center"}}>
+      <Grass postData={postData} />
+
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="cards">
-          {postData
-            .map((post) => (
-              <CardComponent
-                key={post.id}
-                title={post.title}
-                body={post.body}
-              ></CardComponent>
-            ))}
+          {postData.map((post) => (
+            <CardComponent
+              key={post.id}
+              title={post.title}
+              body={post.body}
+            ></CardComponent>
+          ))}
         </div>
-    </div>
+      </div>
     </div>
   );
 }
