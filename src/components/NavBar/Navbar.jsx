@@ -26,7 +26,7 @@ const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType }) => {
       author: "anonymous",
       published_at: `${today.getFullYear()}-${month}-${date}`,
       body: values.content,
-      tags: [values.tags] || null,
+      tags: values.tags || null,
     };
     console.log(newPost);
     onAdd(newPost);
@@ -41,6 +41,7 @@ const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType }) => {
         <Select defaultValue="title" onChange={handleSelectChange} value={searchType}>
           <Option value="title">title</Option>
           <Option value="body">body</Option>
+          <Option value="tags">tags</Option>
         </Select>
         <Input style={{ width: '50%' }} onChange={handleSearchChange}/>
       </Input.Group>
