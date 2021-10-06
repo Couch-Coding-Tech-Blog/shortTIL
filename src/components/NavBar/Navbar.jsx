@@ -22,7 +22,7 @@ const Navbar = ({ onAdd }) => {
       author: "anonymous",
       published_at: `${today.getFullYear()}-${month}-${date}`,
       body: values.content,
-      tags: [values.tags] || null,
+      tags: values.tags || null,
     };
     console.log(newPost);
     onAdd(newPost);

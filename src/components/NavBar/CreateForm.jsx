@@ -5,23 +5,22 @@ import "./NavBar.css";
 
 const { TextArea } = Input;
 const CreateForm = ({ visible, onCreate, onCancel }) => {
-  const tagsRef = useRef();
+  const tagsRef = useRef(null);
   const tagsBoxRef = useRef();
   const [form] = Form.useForm();
   const [tags, setTags] = useState([]);
   const [alertVisible, setAlertVisible] = useState(false);
-
-  const showTagAlert = () => {
-    if (!tagsRef.current.state.focused) setAlertVisible(false);
-  };
 
   const createTags = (e) => {
     if (e.keyCode === 13 || e.keyCode === 188) {
       e.preventDefault();
       const value = tagsRef.current.state.value;
       setTags([...tags, value]);
-      form.resetFields(["tags"]);
-      tagsRef.current.focus();
+      // form.resetFields(["tags"]);
+      tagsRef.current.state.value = "";
+      tagsRef.current.focus({
+        cursor: "start",
+      });
     }
   };
 
@@ -146,11 +145,11 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
             ]}
           >
             <Input
+              ref={tagsRef}
               placeholder="태그"
               onKeyDown={createTags}
-              ref={tagsRef}
-              onChange={showTagAlert}
-              onClick={() => setAlertVisible(true)}
+              onFocus={() => setAlertVisible(true)}
+              onBlur={() => setAlertVisible(false)}
             />
           </Form.Item>
         </div>
