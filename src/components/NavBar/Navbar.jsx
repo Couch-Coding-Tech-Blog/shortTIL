@@ -9,7 +9,7 @@ const { Header } = Layout;
 const { Search } = Input;
 const { Option } = Select;
 
-const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType }) => {
+const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType, imageUploader }) => {
   const [visible, setVisible] = useState(false);
 
   const showModal = () => {
