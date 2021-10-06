@@ -25,21 +25,18 @@ function Main() {
     <div>
       <Navbar onAdd={onAdd} />
       <Grass postData = {postData}/>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-        }}
-      >
-        {postData
-          .map((post) => (
-            <CardComponent
-              key={post.id}
-              title={post.title}
-              body={post.body}
-            ></CardComponent>
-          ))}
-      </div>
+      <div style={{display: "flex", justifyContent: "center"}}>
+        <div className="cards">
+          {postData
+            .map((post) => (
+              <CardComponent
+                key={post.id}
+                title={post.title}
+                body={post.body}
+              ></CardComponent>
+            ))}
+        </div>
+    </div>
     </div>
   );
 }
