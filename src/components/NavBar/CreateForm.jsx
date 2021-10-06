@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
-import { Modal, Form, Input, Alert, Tag } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import { Modal, Form, Input, Alert, Tag, Upload } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import "./NavBar.css";
 
 const { TextArea } = Input;
@@ -9,7 +10,6 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
   const [form] = Form.useForm();
   const [tags, setTags] = useState([]);
   const [alertVisible, setAlertVisible] = useState(false);
-  const [tagsRes, setTagsRes] = useState("");
 
   const showTagAlert = () => {
     if (!tagsRef.current.state.focused) setAlertVisible(false);
@@ -22,12 +22,63 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
       setTags([...tags, value]);
       form.resetFields(["tags"]);
       tagsRef.current.focus();
-      const tagBox = Array.from(tagsBoxRef.current.childNodes).map(
-        (node) => node.innerText
-      );
-      setTagsRes(tagBox);
     }
   };
+
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
+  const [fileList, setFileList] = useState([
+    {
+      uid: "-1",
+      name: "image.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-xxx",
+      percent: 50,
+      name: "image.png",
+      status: "uploading",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-5",
+      name: "image.png",
+      status: "error",
+    },
+  ]);
+
+  const handleCancel = () => {
+    setPreviewVisible(false);
+  };
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewVisible(true);
+    setPreviewTitle(
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+    );
+  };
+  const handleChange = ({ fileList }) => {
+    setFileList([{ fileList }]);
+  };
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
   return (
     <Modal
       visible={visible}
@@ -41,7 +92,10 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
         form
           .validateFields()
           .then((values) => {
-            values.tags = tagsRes;
+            const tagBox = Array.from(tagsBoxRef.current.childNodes)
+              .filter((node) => node.className.indexOf("ant-tag-hidden") === -1)
+              .map((node) => node.innerText);
+            values.tags = tagBox;
             onCreate(values);
             setTags([]);
             form.resetFields();
@@ -100,13 +154,30 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
             />
           </Form.Item>
         </div>
+        <Alert
+          message="쉼표 혹은 엔터를 입력하여 태그를 등록할 수 있습니다."
+          type="info"
+          banner={true}
+          className={alertVisible ? "showAlert" : "hideAlert"}
+        />
+        <Upload
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          listType="picture-card"
+          fileList={fileList}
+          onPreview={handlePreview}
+          onChange={handleChange}
+        >
+          {fileList.length >= 8 ? null : uploadButton}
+        </Upload>
+        <Modal
+          visible={previewVisible}
+          title={previewTitle}
+          footer={null}
+          onCancel={handleCancel}
+        >
+          <img alt="example" style={{ width: "100%" }} src={previewImage} />
+        </Modal>
       </Form>
-      <Alert
-        message="쉼표 혹은 엔터를 입력하여 태그를 등록할 수 있습니다."
-        type="info"
-        banner={true}
-        className={alertVisible ? "showAlert" : "hideAlert"}
-      />
     </Modal>
   );
 };

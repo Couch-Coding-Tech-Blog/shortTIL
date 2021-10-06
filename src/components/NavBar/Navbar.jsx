@@ -31,7 +31,7 @@ const Navbar = ({ onAdd }) => {
 
   return (
     <Header className="header">
-      <div className="header_logo">ReactJS Team Project</div>
+      <div className="header_logo">숏TIL</div>
       <div>
         <Button
           className="header_write-btn"
