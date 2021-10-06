@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import "./NavBar.css";
-import { Layout, Button } from "antd";
+import { Layout, Button, Input, Select } from "antd";
 import { EditFilled } from "@ant-design/icons";
 import CreateForm from "./CreateForm";
+import "antd/dist/antd.css";
 
 const { Header } = Layout;
+const { Search } = Input;
+const { Option } = Select;
 
-const Navbar = ({ onAdd }) => {
+const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType }) => {
   const [visible, setVisible] = useState(false);
+
   const showModal = () => {
     setVisible(true);
   };
@@ -32,6 +36,15 @@ const Navbar = ({ onAdd }) => {
   return (
     <Header className="header">
       <div className="header_logo">ReactJS Team Project</div>
+
+      <Input.Group compact style={{ width: "100%", maxWidth: "500px" }}>
+        <Select defaultValue="title" onChange={handleSelectChange} value={searchType}>
+          <Option value="title">title</Option>
+          <Option value="body">body</Option>
+        </Select>
+        <Input style={{ width: '50%' }} onChange={handleSearchChange}/>
+      </Input.Group>
+
       <div>
         <Button
           className="header_write-btn"
