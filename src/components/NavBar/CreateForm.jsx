@@ -26,7 +26,6 @@ const CreateForm = ({ visible, onCreate, onCancel, imageUploader }) => {
       const value = tagsRef.current.state.value;
       setTags([...tags, value]);
       form.resetFields(["tags"]);
-      // tagsRef.current.state.value = "";
       tagsRef.current.focus({
         cursor: "start",
       });
@@ -140,6 +139,7 @@ const CreateForm = ({ visible, onCreate, onCancel, imageUploader }) => {
               onKeyDown={createTags}
               onFocus={() => setAlertVisible(true)}
               onBlur={() => setAlertVisible(false)}
+              autoFocus
             />
           </Form.Item>
         </div>
