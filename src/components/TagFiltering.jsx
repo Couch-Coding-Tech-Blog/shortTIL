@@ -12,6 +12,7 @@ const TagFiltering = ({ onFiltering }) => {
         columnGap: "5px",
         justifyContent: "center",
         alignItems: "center",
+        marginBottom: "1.5rem"
       }}
     >
       {categoryList.map((category, idx) => (

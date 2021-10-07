@@ -99,39 +99,51 @@ function Main({ imageUploader }) {
       />
       <Grass postData={postData} />
       <TagFiltering onFiltering={handleFiltering} />
-      <p style={{ paddingTop: "40px", width: "100%", textAlign: "center" }}>
-        Posts
-      </p>
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <div className="cards">
-          {filtered ? (
-            <>
-              {filteringData.map((post) => (
-                <CardComponent
-                  key={post.id}
-                  id={post.id}
-                  title={post.title}
-                  body={post.body}
-                  imageUploader={imageUploader}
-                ></CardComponent>
-              ))}
-            </>
-          ) : (
-            <>
-              {postData.map((post) => (
-                <CardComponent
-                  key={post.id}
-                  id={post.id}
-                  title={post.title}
-                  body={post.body}
-                  imageUploader={imageUploader}
-                ></CardComponent>
-              ))}
-            </>
-          )}
+      <section className="cardgrid">
+        <div className="inner">
+          <div className="cardheader">
+            <p>All Posts</p>
+            <Input.Group compact className="search">
+              <Select defaultValue="title" onChange={handleSelectChange} value={searchType}>
+                <Option value="title">Title</Option>
+                <Option value="body">Body</Option>
+                <Option value="tags">Tags</Option>
+              </Select>
+              <Input onChange={handleSearchChange} placeholder="search" className="input"/>
+            </Input.Group>
+          </div>
+          <div className="grid">
+            <div className="cards">
+            {filtered ? (
+              <>
+                {filteringData.map((post) => (
+                  <CardComponent
+                    key={post.id}
+                    id={post.id}
+                    title={post.title}
+                    body={post.body}
+                    imageUploader={imageUploader}
+                  ></CardComponent>
+                ))}
+              </>
+            ) : (
+              <>
+                {postData.map((post) => (
+                  <CardComponent
+                    key={post.id}
+                    id={post.id}
+                    title={post.title}
+                    body={post.body}
+                    imageUploader={imageUploader}
+                  ></CardComponent>
+                ))}
+              </>
+            )}
+            </div>
+          </div>
         </div>
-        <footer>© {new Date().getFullYear()} TIL Team</footer>
-    </div>
+      </section>
+      <footer>© {new Date().getFullYear()} TIL Team</footer>
   </div>
   );
 }
