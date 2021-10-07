@@ -1,7 +1,6 @@
-@import "~antd/dist/antd.css";
 
 .header {
-  background-color: white;
+  background: white;
   box-shadow: 1px 1px 10px 1px #d0d0d0;
   display: flex;
   justify-content: space-between;
@@ -14,7 +13,7 @@
 }
 
 .header_logo {
-  color: #1890ff;
+  // color: #1890ff;
   font-weight: 500;
   cursor: pointer;
 }

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./NavBar.css";
 import { Layout, Button, Input, Select } from "antd";
 import { EditFilled } from "@ant-design/icons";
-import CreateForm from "./CreateForm";
+import CreateForm from "../ModalForm/CreateForm";
 import "antd/dist/antd.css";
+import "./style.scss";
 
 const { Header } = Layout;
 const { Search } = Input;
@@ -35,7 +35,7 @@ const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType, imageU
   };
 
   return (
-    <Header className="header">
+    <div className="header">
       <div className="header_logo">🌱 TIL</div>
       <Input.Group compact style={{ width: "100%", maxWidth: "500px" }}>
         <Select defaultValue="title" onChange={handleSelectChange} value={searchType}>
@@ -61,7 +61,7 @@ const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType, imageU
           }}
         />
       </div>
-    </Header>
+    </div>
   );
 };
 
