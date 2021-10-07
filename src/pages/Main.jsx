@@ -11,11 +11,11 @@ function Main() {
 
   useEffect(() => {
     async function getData() {
-      const res = await axios.get(
-        "http://localhost:4000/posts?_sort=id&_order=desc"
-      );
+      const res = await axios
+      .get("http://localhost:4000/posts?_sort=id&_order=desc");
       setPostData(res.data);
     }
+    console.log(postData);
     getData();
   }, [postNum]);
 
@@ -30,18 +30,20 @@ function Main() {
     <div>
       <Navbar onAdd={onAdd} />
       <Grass postData={postData} />
-
+      <p style={{paddingTop: "40px", width: "100%", textAlign: "center"}}>Posts</p>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="cards">
           {postData.map((post) => (
             <CardComponent
               key={post.id}
+              id={post.id}
               title={post.title}
               body={post.body}
             ></CardComponent>
           ))}
         </div>
       </div>
+      <footer>© {new Date().getFullYear()} TIL Team</footer>
     </div>
   );
 }
