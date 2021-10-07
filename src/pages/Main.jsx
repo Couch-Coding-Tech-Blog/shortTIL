@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../components/NavBar/Navbar";
-import CardComponent from "../components/CardComponent";
-import Grass from "../components/NavBar/Grass";
+import Navbar from "../components/Header/Header";
+import CardComponent from "../components/Card/CardComponent";
+import Grass from "../components/Contribute/Contribute";
 import axios from "axios";
-import "./Main.css";
+import "./Main.scss";
 
 function Main({ imageUploader }) {
   const [postData, setPostData] = useState([]);
