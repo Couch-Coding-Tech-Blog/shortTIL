@@ -119,8 +119,8 @@ const CreateForm = ({ visible, onCreate, onCancel, imageUploader }) => {
         </Form.Item>
         <div style={{ display: "flex" }}>
           <div ref={tagsBoxRef}>
-            {tags.map((tag) => (
-              <Tag closable color="blue">
+            {tags.map((tag, idx) => (
+              <Tag key={idx} closable color="blue">
                 {tag}
               </Tag>
             ))}
