@@ -30,6 +30,7 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
   };
   return (
     <Modal
+      centered
       visible={visible}
       title="새 글 작성"
       okText="등록"
