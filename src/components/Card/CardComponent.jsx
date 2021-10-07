@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Card, Modal, Button, Form, Input } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import axios from "axios";
+import "./style.scss";
 
 const { TextArea } = Input;
 const { confirm } = Modal;
@@ -17,7 +18,7 @@ function CardComponent(props) {
     await axios.delete(`http://localhost:4000/posts/${props.id}`, {
       ...newPost,
     });
-    console.log('delete')
+    console.log('delete') // 삭제 누르면 db에서 삭제는 되는데 뷰에서 삭제가 안됨
     setEditing(true);
   };
 
@@ -28,9 +29,13 @@ function CardComponent(props) {
         title: '`${title}`',
         body: '`${body}`'
       }
+    //   // .then(function(response) {
+    //   //   data.send(response.data)
+    // })
     }));
-    console.log('patch')
-    setEditing(false);
+    console.log('patch') // 수정하면 db에 업로드가 안됨, 뷰에서도 수정되지 않음
+    setEditing(true); // 수정완료 누르면 이전 모달로 전환이 안됨
+                      // 모달을 닫고 다시열면 수정상태 그대로 보임
   };
 
   function showDeleteConfirm() {
