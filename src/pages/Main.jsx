@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { Layout, Button, Input, Select } from "antd";
+import { EditFilled } from "@ant-design/icons";
 import Navbar from "../components/Header/Header";
 import CardComponent from "../components/Card/CardComponent";
 import Grass from "../components/Contribute/Contribute";
 import axios from "axios";
 import "./Main.scss";
+
+const { Option } = Select;
 
 function Main({ imageUploader }) {
   const [postData, setPostData] = useState([]);
@@ -47,25 +51,40 @@ function Main({ imageUploader }) {
 
 
   return (
-    <div>
+    <>
       <Navbar onAdd={onAdd} handleSearchChange={handleSearchChange} handleSelectChange={handleSelectChange} searchType={searchType} imageUploader={imageUploader}/>
       <Grass postData={postData} />
-      <p style={{paddingTop: "40px", width: "100%", textAlign: "center"}}>Posts</p>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <div className="cards">
-          {postData.map((post) => (
-            <CardComponent
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              body={post.body}
-              imageUploader={imageUploader}
-            ></CardComponent>
-          ))}
+      <div className="tag"><a>Tag</a><a>Tag</a><a>Tag</a><a>Tag</a><a>Tag</a><a>Tag</a><a>Tag</a><a>Tag</a><a>Tag</a></div>
+      <section className="cardgrid">
+        <div className="inner">
+          <div className="cardheader">
+            <p>All Posts</p>
+            <Input.Group compact className="search">
+              <Select defaultValue="title" onChange={handleSelectChange} value={searchType}>
+                <Option value="title">Title</Option>
+                <Option value="body">Body</Option>
+                <Option value="tags">Tags</Option>
+              </Select>
+              <Input onChange={handleSearchChange} placeholder="search" className="input"/>
+            </Input.Group>
+          </div>
+          <div className="grid">
+            <div className="cards">
+              {postData.map((post) => (
+                <CardComponent
+                  key={post.id}
+                  id={post.id}
+                  title={post.title}
+                  body={post.body}
+                  imageUploader={imageUploader}
+                ></CardComponent>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
       <footer>© {new Date().getFullYear()} TIL Team</footer>
-    </div>
+    </>
   );
 }
 
