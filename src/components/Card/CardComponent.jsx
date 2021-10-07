@@ -3,6 +3,7 @@ import { Card, Modal, Button, Form, Input } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import axios from "axios";
 import "./style.scss";
+import { Carousel} from "antd";
 
 const { TextArea } = Input;
 const { confirm } = Modal;
@@ -13,6 +14,18 @@ function CardComponent(props) {
   const { visible, loading } = useState(false);
   const [postNum, setPostNum] = useState([]);
   const [editing, setEditing] = useState(true);
+
+  const ShowImages = () => {
+    console.log(props.imagefile);
+    if(!props.imagefile.length) return <></>
+    else {
+      return <Carousel autoplay style={{ backgroundColor: "#0D6FFF"}}>
+        {
+          props.imagefile.map((file, idx) => <img key={idx} src={file.url ? file.url : file.thumbUrl} style={{ width: "400px"}}/>)
+        }
+      </Carousel>
+    }
+   }
 
   const onDel = async (newPost) => {
     await axios.delete(`http://localhost:4000/posts/${props.id}`, {
@@ -72,6 +85,7 @@ function CardComponent(props) {
         <Modal visible={isModalVisible} onCancel={() => setIsModalVisible(false)} onOk={editing} footer={[]} centered>
         {editing ? (
           <div className="ModalEdit">
+            <ShowImages></ShowImages>
             <h1>{props.title}</h1>
             <p>{props.body}</p>
             <div className="btnArea">
@@ -81,6 +95,7 @@ function CardComponent(props) {
           </div>
           ) : (
             <div className="ModalEditForm">
+              <ShowImages></ShowImages>
               <Input defaultValue={`${props.title}`} />
               <TextArea defaultValue={`${props.body}`} />
               <div className="btnArea">

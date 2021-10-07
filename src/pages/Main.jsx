@@ -122,6 +122,7 @@ function Main({ imageUploader }) {
                     id={post.id}
                     title={post.title}
                     body={post.body}
+                    imagefile={post.uploaded_images}
                     imageUploader={imageUploader}
                   ></CardComponent>
                 ))}
@@ -134,6 +135,7 @@ function Main({ imageUploader }) {
                     id={post.id}
                     title={post.title}
                     body={post.body}
+                    imagefile={post.uploaded_images}
                     imageUploader={imageUploader}
                   ></CardComponent>
                 ))}
