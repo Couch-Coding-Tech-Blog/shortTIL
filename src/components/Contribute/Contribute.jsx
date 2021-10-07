@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ResponsiveCalendar } from "@nivo/calendar";
 import moment from "moment";
+import "./style.scss";
 
 function Grass({ postData }) {
     const [grassData, setGrassData] = useState(false);
