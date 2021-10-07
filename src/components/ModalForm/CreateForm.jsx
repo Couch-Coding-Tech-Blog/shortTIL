@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Modal, Form, Input, Alert, Tag, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import "./NavBar.css";
+import "./style.scss";
 
 const { TextArea } = Input;
 const getBase64 = (file) => {
@@ -51,11 +51,11 @@ const CreateForm = ({ visible, onCreate, onCancel, imageUploader }) => {
   };
 
   const handleChange = async ({ fileList }) => {
-    const newFileIndex = fileList.length - 1;
-    const uploaded = await imageUploader.upload(
-      fileList[newFileIndex].originFileObj
-    );
-    fileList[newFileIndex].url = uploaded.url;
+    // const newFileIndex = fileList.length - 1;
+    // const uploaded = await imageUploader.upload(
+    //   fileList[newFileIndex].originFileObj
+    // );
+    // fileList[newFileIndex].url = uploaded.url;
     setFileList(fileList);
   };
 
