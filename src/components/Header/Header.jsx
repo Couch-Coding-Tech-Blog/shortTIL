@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { Layout, Button, Input, Select } from "antd";
-import { EditFilled } from "@ant-design/icons";
 import CreateForm from "../ModalForm/CreateForm";
 import "antd/dist/antd.css";
 import "./style.scss";
 
 const { Header } = Layout;
 const { Search } = Input;
-const { Option } = Select;
 
-const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType, imageUploader }) => {
+const Navbar = ({ onAdd, imageUploader }) => {
   const [visible, setVisible] = useState(false);
 
   const showModal = () => {
@@ -36,22 +34,18 @@ const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType, imageU
 
   return (
     <div className="header">
-      <div className="header_logo">🌱 TIL</div>
-      <Input.Group compact style={{ width: "100%", maxWidth: "500px" }}>
-        <Select defaultValue="title" onChange={handleSelectChange} value={searchType}>
-          <Option value="title">title</Option>
-          <Option value="body">body</Option>
-          <Option value="tags">tags</Option>
-        </Select>
-        <Input style={{ width: '50%' }} onChange={handleSearchChange}/>
-      </Input.Group>
-      <div>
+      <h3 className="shape"><span></span><span></span></h3>
+      <a href="https://github.com/Couch-Coding-Tech-Blog/tech-blog" target="_blank">
+        <img src="https://user-images.githubusercontent.com/51474234/136360542-c3ba285d-7758-481d-9b5b-a466ffb5e59c.png" alt="stack icon" />
+      </a>
+      <p>TIL Contribute Visualization</p>
+      <p>Jihyun, Chaekyung, Yoojeong, Darae</p>
+      <div className="writeBtn">
         <Button
           className="header_write-btn"
           size="large"
-          icon={<EditFilled />}
           onClick={showModal}
-        />
+        >여기에 글을 쓰고 잔디를 심어보세요.</Button>
         <CreateForm
           imageUploader={imageUploader}
           visible={visible}
