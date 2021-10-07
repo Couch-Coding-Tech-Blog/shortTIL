@@ -2,12 +2,15 @@
 
 .header {
   background-color: white;
-  box-shadow: 1px 5px 15px 3px #d0d0d0;
+  box-shadow: 1px 1px 10px 1px #d0d0d0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 48px;
   margin-bottom: 4em;
+  position: fixed;
+  z-index: 999;
+  width: 100%;
 }
 
 .header_logo {

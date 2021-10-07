@@ -50,11 +50,13 @@ function Main({ imageUploader }) {
     <div>
       <Navbar onAdd={onAdd} handleSearchChange={handleSearchChange} handleSelectChange={handleSelectChange} searchType={searchType} imageUploader={imageUploader}/>
       <Grass postData={postData} />
+      <p style={{paddingTop: "40px", width: "100%", textAlign: "center"}}>Posts</p>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="cards">
           {postData.map((post) => (
             <CardComponent
               key={post.id}
+              id={post.id}
               title={post.title}
               body={post.body}
               imageUploader={imageUploader}
@@ -62,6 +64,7 @@ function Main({ imageUploader }) {
           ))}
         </div>
       </div>
+      <footer>© {new Date().getFullYear()} TIL Team</footer>
     </div>
   );
 }

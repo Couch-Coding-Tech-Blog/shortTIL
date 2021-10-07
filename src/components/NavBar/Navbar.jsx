@@ -36,7 +36,7 @@ const Navbar = ({ onAdd,handleSearchChange,handleSelectChange,searchType, imageU
 
   return (
     <Header className="header">
-      <div className="header_logo">숏TIL</div>
+      <div className="header_logo">🌱 TIL</div>
       <Input.Group compact style={{ width: "100%", maxWidth: "500px" }}>
         <Select defaultValue="title" onChange={handleSelectChange} value={searchType}>
           <Option value="title">title</Option>

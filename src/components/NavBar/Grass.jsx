@@ -38,6 +38,8 @@ function Grass({ postData }) {
     }
 
     return (
+        <>
+        <p style={{paddingTop: "100px", width: "100%", textAlign: "center"}}>Contribute visualization</p>
         <div style={{ height: "200px" }}>
             <ResponsiveCalendar
                 data={grassData}
@@ -64,6 +66,7 @@ function Grass({ postData }) {
                 ]}
             />
         </div>
+        </>
     );
 }
 
