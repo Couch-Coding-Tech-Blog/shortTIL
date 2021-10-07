@@ -6,6 +6,7 @@ import CardComponent from "../components/Card/CardComponent";
 import Grass from "../components/Contribute/Contribute";
 import axios from "axios";
 import "./Main.scss";
+import TagFiltering from "../components/TagFiltering";
 
 const { Option } = Select;
 
@@ -101,7 +102,7 @@ function Main({ imageUploader }) {
       <p style={{ paddingTop: "40px", width: "100%", textAlign: "center" }}>
         Posts
       </p>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
         <div className="cards">
           {filtered ? (
             <>
@@ -129,7 +130,7 @@ function Main({ imageUploader }) {
             </>
           )}
         </div>
-      <footer>© {new Date().getFullYear()} TIL Team</footer>
+        <footer>© {new Date().getFullYear()} TIL Team</footer>
     </div>
   </div>
   );
