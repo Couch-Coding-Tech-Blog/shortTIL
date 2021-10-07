@@ -5,19 +5,30 @@ import Grass from "../components/NavBar/Grass";
 import axios from "axios";
 import "./Main.css";
 
-function Main() {
+function Main({ imageUploader }) {
   const [postData, setPostData] = useState([]);
   const [postNum, setPostNum] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchType, setSearchType] = useState("title");
 
   useEffect(() => {
-    async function getData() {
-      const res = await axios
-      .get("http://localhost:4000/posts?_sort=id&_order=desc");
-      setPostData(res.data);
+    //searchTerm여부에 따라 전체검색 or 필터검색 실행
+    searchTerm ? getFilterData(): getData();
+  }, [searchTerm, searchType, postNum]);
+
+  async function getData() {
+    const res = await axios.get(
+      "http://localhost:4000/posts?_sort=id&_order=desc"
+    );
+    setPostData(res.data);
+  }
+
+  async function getFilterData() {
+    const res = await axios.get(
+      `http://localhost:4000/posts?_sort=id&_order=desc&${searchType}_like=${searchTerm}`
+    );
+    setPostData(res.data);
     }
-    console.log(postData);
-    getData();
-  }, [postNum]);
 
   const onAdd = async (newPost) => {
     await axios.post("http://localhost:4000/posts", {
@@ -26,9 +37,18 @@ function Main() {
     setPostNum(postNum + 1);
   };
 
+  const handleSearchChange = async (event) => {
+    setSearchTerm(event.target.value);
+    
+  }
+  const handleSelectChange = (event) =>{
+    setSearchType(event);
+  }
+
+
   return (
     <div>
-      <Navbar onAdd={onAdd} />
+      <Navbar onAdd={onAdd} handleSearchChange={handleSearchChange} handleSelectChange={handleSelectChange} searchType={searchType} imageUploader={imageUploader}/>
       <Grass postData={postData} />
       <p style={{paddingTop: "40px", width: "100%", textAlign: "center"}}>Posts</p>
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -39,6 +59,7 @@ function Main() {
               id={post.id}
               title={post.title}
               body={post.body}
+              imageUploader={imageUploader}
             ></CardComponent>
           ))}
         </div>

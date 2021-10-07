@@ -1,19 +1,24 @@
 import React, { useRef, useState } from "react";
-import { Modal, Form, Input, Alert, Tag } from "antd";
+import { Modal, Form, Input, Alert, Tag, Upload } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import "./NavBar.css";
 
 const { TextArea } = Input;
-const CreateForm = ({ visible, onCreate, onCancel }) => {
-  const tagsRef = useRef();
+const getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+};
+
+const CreateForm = ({ visible, onCreate, onCancel, imageUploader }) => {
+  const tagsRef = useRef(null);
   const tagsBoxRef = useRef();
   const [form] = Form.useForm();
   const [tags, setTags] = useState([]);
   const [alertVisible, setAlertVisible] = useState(false);
-  const [tagsRes, setTagsRes] = useState("");
-
-  const showTagAlert = () => {
-    if (!tagsRef.current.state.focused) setAlertVisible(false);
-  };
 
   const createTags = (e) => {
     if (e.keyCode === 13 || e.keyCode === 188) {
@@ -21,13 +26,45 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
       const value = tagsRef.current.state.value;
       setTags([...tags, value]);
       form.resetFields(["tags"]);
-      tagsRef.current.focus();
-      const tagBox = Array.from(tagsBoxRef.current.childNodes).map(
-        (node) => node.innerText
-      );
-      setTagsRes(tagBox);
+      // tagsRef.current.state.value = "";
+      tagsRef.current.focus({
+        cursor: "start",
+      });
     }
   };
+
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
+  const [fileList, setFileList] = useState([]);
+
+  const handleCancel = () => {
+    setPreviewVisible(false);
+  };
+  const handlePreview = async (file) => {
+    if (!file.url && !file.thumbUrl) {
+      file.thumbUrl = await getBase64(file.file.originFileObj);
+    }
+    setPreviewImage(file.url || file.thumbUrl);
+    setPreviewVisible(true);
+    setPreviewTitle(file.name);
+  };
+
+  const handleChange = async ({ fileList }) => {
+    const newFileIndex = fileList.length - 1;
+    const uploaded = await imageUploader.upload(
+      fileList[newFileIndex].originFileObj
+    );
+    fileList[newFileIndex].url = uploaded.url;
+    setFileList(fileList);
+  };
+
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
   return (
     <Modal
       centered
@@ -42,9 +79,14 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
         form
           .validateFields()
           .then((values) => {
-            values.tags = tagsRes;
+            const tagBox = Array.from(tagsBoxRef.current.childNodes)
+              .filter((node) => node.className.indexOf("ant-tag-hidden") === -1)
+              .map((node) => node.innerText);
+            values.tags = tagBox;
+            values.images = fileList;
             onCreate(values);
             setTags([]);
+            setFileList([]);
             form.resetFields();
           })
           .catch((info) => {
@@ -93,21 +135,37 @@ const CreateForm = ({ visible, onCreate, onCancel }) => {
             ]}
           >
             <Input
+              ref={tagsRef}
               placeholder="태그"
               onKeyDown={createTags}
-              ref={tagsRef}
-              onChange={showTagAlert}
-              onClick={() => setAlertVisible(true)}
+              onFocus={() => setAlertVisible(true)}
+              onBlur={() => setAlertVisible(false)}
             />
           </Form.Item>
         </div>
+        <Alert
+          message="쉼표 혹은 엔터를 입력하여 태그를 등록할 수 있습니다."
+          type="info"
+          banner={true}
+          className={alertVisible ? "showAlert" : "hideAlert"}
+        />
+        <Upload
+          listType="picture-card"
+          fileList={fileList}
+          onPreview={handlePreview}
+          onChange={handleChange}
+        >
+          {fileList.length >= 8 ? null : uploadButton}
+        </Upload>
+        <Modal
+          visible={previewVisible}
+          title={previewTitle}
+          footer={null}
+          onCancel={handleCancel}
+        >
+          <img alt="previewImg" style={{ width: "100%" }} src={previewImage} />
+        </Modal>
       </Form>
-      <Alert
-        message="쉼표 혹은 엔터를 입력하여 태그를 등록할 수 있습니다."
-        type="info"
-        banner={true}
-        className={alertVisible ? "showAlert" : "hideAlert"}
-      />
     </Modal>
   );
 };
