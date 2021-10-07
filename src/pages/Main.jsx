@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../components/NavBar/Navbar";
-import CardComponent from "../components/CardComponent";
-import Grass from "../components/NavBar/Grass";
+import { Layout, Button, Input, Select } from "antd";
+import { EditFilled } from "@ant-design/icons";
+import Navbar from "../components/Header/Header";
+import CardComponent from "../components/Card/CardComponent";
+import Grass from "../components/Contribute/Contribute";
 import axios from "axios";
-import "./Main.css";
-import TagFiltering from "../components/TagFiltering";
+import "./Main.scss";
+
+const { Option } = Select;
 
 function Main({ imageUploader }) {
   const [postData, setPostData] = useState([]);
@@ -126,9 +129,9 @@ function Main({ imageUploader }) {
             </>
           )}
         </div>
-      </div>
       <footer>© {new Date().getFullYear()} TIL Team</footer>
     </div>
+  </div>
   );
 }
 

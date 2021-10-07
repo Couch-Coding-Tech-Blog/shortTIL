@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Card, Modal, Button, Form, Input } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import axios from "axios";
+import "./style.scss";
 
 const { TextArea } = Input;
 const { confirm } = Modal;
@@ -17,7 +18,7 @@ function CardComponent(props) {
     await axios.delete(`http://localhost:4000/posts/${props.id}`, {
       ...newPost,
     });
-    console.log('delete')
+    console.log('delete') // 삭제 누르면 db에서 삭제는 되는데 뷰에서 삭제가 안됨
     setEditing(true);
   };
 
@@ -29,18 +30,19 @@ function CardComponent(props) {
         body: '`${body}`'
       }
     }));
-    console.log('patch')
-    setEditing(false);
+    console.log('patch') // 수정하면 db에 업로드가 안됨, 뷰에서도 수정되지 않음
+    setEditing(true);    // 수정완료 누르면 이전 모달로 전환이 안됨
+                         // 모달을 닫고 다시열면 수정상태 그대로 보임
   };
 
   function showDeleteConfirm() {
     confirm({
-      title: '삭제하시겠습니까',
+      title: '포스팅을 삭제할까요?',
       icon: <ExclamationCircleOutlined />,
       content: '',
-      okText: 'Yes',
+      okText: '네',
       okType: 'danger',
-      cancelText: 'No',
+      cancelText: '아니요',
       centered: 'yes',
       onOk() {
         // console.log('Yes');
@@ -56,7 +58,7 @@ function CardComponent(props) {
   }
 
   return (
-    <div>
+    <>
       <Card
         hoverable
         style={{ width: 300, margin: "1rem" }}
@@ -69,30 +71,30 @@ function CardComponent(props) {
       </Card>
         <Modal visible={isModalVisible} onCancel={() => setIsModalVisible(false)} onOk={editing} footer={[]} centered>
         {editing ? (
-          <>
-            <h1 style={{marginTop: "30px"}}>{props.title}</h1>
-            <p style={{height: "200px", marginBottom: "20px"}}>{props.body}</p>
-            <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+          <div className="ModalEdit">
+            <h1>{props.title}</h1>
+            <p>{props.body}</p>
+            <div className="btnArea">
               <Button size="medium" onClick={() => setEditing(false)}>수정</Button>
               <Button size="medium" onClick={showDeleteConfirm} type="danger" ghost>삭제</Button>
             </div>
-          </>
+          </div>
           ) : (
-            <>
-              <Input defaultValue={`${props.title}`} style={{fontSize: "28px", padding: "0", marginTop: "30px"}}/>
-              <TextArea defaultValue={`${props.body}`} style={{height: "200px", marginTop: "10px", marginBottom: "20px", padding: "0"}}/>
-              <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-              <Button size="medium" onClick={onUpdate} type="primary">
-                수정완료
-              </Button>
-              <Button size="medium" onClick={() => setEditing(true)} type="primary" ghost>
-                취소
-              </Button>
+            <div className="ModalEditForm">
+              <Input defaultValue={`${props.title}`} />
+              <TextArea defaultValue={`${props.body}`} />
+              <div className="btnArea">
+                <Button size="medium" onClick={onUpdate} type="primary">
+                  수정완료
+                </Button>
+                <Button size="medium" onClick={() => setEditing(true)} type="primary" ghost>
+                  취소
+                </Button>
               </div>
-            </>
+            </div>
           )}
       </Modal>
-    </div>  
+    </>  
   );
 }
 

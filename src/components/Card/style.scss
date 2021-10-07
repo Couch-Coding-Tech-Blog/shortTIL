@@ -1,0 +1,12 @@
+
+.ModalEdit {
+  h1 {margin-top: 30px;}
+  p {height: 200px; margin-bottom: 20px;}
+  .btnArea {display: flex; justify-content: space-between; width: 100%;}
+}
+
+.ModalEditForm {
+  input {font-size: 28px; padding: 0; margin-top: 30px;}
+  textarea {height: 200px; margin-top: 10px; margin-bottom: 20px; padding: 0;}
+  .btnArea {display: flex; justify-content: space-between; width: 100%;}
+}
