@@ -55,7 +55,7 @@ const CreateForm = ({ visible, onCreate, onCancel, imageUploader }) => {
       fileList[newFileIndex].originFileObj
     );
     fileList[newFileIndex].url = uploaded.url;
-    // setFileList(fileList);
+    setFileList(fileList);
   };
 
   const uploadButton = (
