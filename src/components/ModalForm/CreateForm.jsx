@@ -50,12 +50,12 @@ const CreateForm = ({ visible, onCreate, onCancel, imageUploader }) => {
   };
 
   const handleChange = async ({ fileList }) => {
-    // const newFileIndex = fileList.length - 1;
-    // const uploaded = await imageUploader.upload(
-    //   fileList[newFileIndex].originFileObj
-    // );
-    // fileList[newFileIndex].url = uploaded.url;
-    setFileList(fileList);
+    const newFileIndex = fileList.length - 1;
+    const uploaded = await imageUploader.upload(
+      fileList[newFileIndex].originFileObj
+    );
+    fileList[newFileIndex].url = uploaded.url;
+    // setFileList(fileList);
   };
 
   const uploadButton = (
