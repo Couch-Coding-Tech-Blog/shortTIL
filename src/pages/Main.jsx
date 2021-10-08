@@ -95,16 +95,6 @@ function Main({ imageUploader }) {
     );
     setAllData(res.data);
     setPostData(data);
-    const currentElement = element;
-    const currentObserver = observer.current;
-    if (currentElement) {
-      currentObserver.observe(currentElement);
-    }
-    return () => {
-      if (currentElement) {
-        currentObserver.unobserve(currentElement);
-      }
-    };
   }
 
   async function getFilterData() {
@@ -135,7 +125,7 @@ function Main({ imageUploader }) {
     //   (post) =>
     //     post.tags && post.tags.some((tag) => tag === event.target.innerText)
     // );
-    const matchedData = postData.filter(
+    const matchedData = allData.filter(
       (post) =>
         post.tags &&
         post.tags.some((tag) => {
@@ -157,9 +147,7 @@ function Main({ imageUploader }) {
           }
         })
     );
-
     setFilteringData(matchedData);
-    console.log(matchedData);
     setFiltered(true);
   };
 
@@ -172,7 +160,7 @@ function Main({ imageUploader }) {
         searchType={searchType}
         imageUploader={imageUploader}
       />
-      <Grass postData={postData} />
+      <Grass postData={allData} />
       <TagFiltering onFiltering={handleFiltering} />
       <section className="cardgrid">
         <div className="inner">
