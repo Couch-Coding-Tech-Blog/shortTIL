@@ -11,7 +11,6 @@ import TagFiltering from "../components/TagFiltering";
 const { Option } = Select;
 
 function Main({ imageUploader }) {
-  const [allData, setAllData] = useState([]);
   const [postData, setPostData] = useState([]);
   const [filtered, setFiltered] = useState(false);
   const [filteringData, setFilteringData] = useState([]);
@@ -20,7 +19,6 @@ function Main({ imageUploader }) {
   const [searchType, setSearchType] = useState("title");
   const perPage = 12;
   const [element, setElement] = useState(null);
-
   const reducer = (state, action) => {
     switch (action.type) {
       case "start":
@@ -47,11 +45,11 @@ function Main({ imageUploader }) {
   const load = () => {
     dispatch({ type: "start" });
     setTimeout(() => {
-      const newData = allData.slice(after, after + perPage);
-      console.log(allData);
+      const newData = postData.slice(after, after + perPage);
       dispatch({ type: "loaded", newData });
     }, 300);
   };
+
   const { loading, data, after, more } = state;
   const loader = useRef(load);
 
@@ -93,8 +91,7 @@ function Main({ imageUploader }) {
     const res = await axios.get(
       "http://localhost:4000/posts?_sort=id&_order=desc"
     );
-    setAllData(res.data);
-    setPostData(data);
+    setPostData(res.data);
   }
 
   async function getFilterData() {
@@ -125,7 +122,7 @@ function Main({ imageUploader }) {
     //   (post) =>
     //     post.tags && post.tags.some((tag) => tag === event.target.innerText)
     // );
-    const matchedData = allData.filter(
+    const matchedData = postData.filter(
       (post) =>
         post.tags &&
         post.tags.some((tag) => {
@@ -160,7 +157,7 @@ function Main({ imageUploader }) {
         searchType={searchType}
         imageUploader={imageUploader}
       />
-      <Grass postData={allData} />
+      <Grass postData={postData} />
       <TagFiltering onFiltering={handleFiltering} />
       <section className="cardgrid">
         <div className="inner">

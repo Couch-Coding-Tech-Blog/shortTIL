@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Modal, Form, Input, Alert, Tag, Upload } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { FileDoneOutlined, PlusOutlined } from "@ant-design/icons";
 import "./style.scss";
 
 const { TextArea } = Input;
@@ -82,7 +82,9 @@ const CreateForm = ({ visible, onCreate, onCancel, imageUploader }) => {
               .filter((node) => node.className.indexOf("ant-tag-hidden") === -1)
               .map((node) => node.innerText);
             values.tags = tagBox;
-            values.images = fileList;
+            values.images = fileList.map((file) => {
+              return { uid: file.uid, url: file.url };
+            });
             onCreate(values);
             setTags([]);
             setFileList([]);
