@@ -15,6 +15,8 @@ function CardComponent(props) {
   const [postNum, setPostNum] = useState([]);
   const [editing, setEditing] = useState(true);
 
+  console.log((props.imagefile != undefined && props.imagefile[0]!=undefined) ? props.imagefile[0].url:null)
+
   const ShowImages = () => {
     if (props.imagefile === undefined) return <div></div>;
     else {
@@ -82,11 +84,12 @@ function CardComponent(props) {
     <>
       <Card
         hoverable
-        style={{ width: 300, margin: "1rem" }}
+        style={{ width: 300, margin: "1rem", height:300}}
         cover={
           <img
             alt="example"
-            src="https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1180&q=80"
+            src={(props.imagefile != undefined && props.imagefile[0]!=undefined) ? props.imagefile[0].url:"https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1180&q=80"}
+            style={{objectFit:"cover", height:"100%",width:"100%"}}
           />
         }
         onClick={() => setIsModalVisible(true)}
