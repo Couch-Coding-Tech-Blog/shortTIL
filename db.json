@@ -218,6 +218,31 @@
         "22",
         "33"
       ],
+      "uploaded_images": [],
+      "{\"data\":{\"id\":\"`${id}`\",\"title\":\"`${title}`\",\"body\":\"`${body}`\"}}": ""
+    },
+    {
+      "id": 1633760471430,
+      "title": "ddd",
+      "author": "anonymous",
+      "published_at": "2021-10-09",
+      "body": "ddd",
+      "tags": [
+        "딸기",
+        "바나나",
+        "수박"
+      ],
+      "uploaded_images": []
+    },
+    {
+      "id": 1633767250593,
+      "title": "수박",
+      "author": "anonymous",
+      "published_at": "2021-10-09",
+      "body": "수박수박",
+      "tags": [
+        "수박"
+      ],
       "uploaded_images": []
     }
   ]

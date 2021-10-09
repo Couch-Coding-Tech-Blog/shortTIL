@@ -6,7 +6,7 @@ import CardComponent from "../components/Card/CardComponent";
 import Grass from "../components/Contribute/Contribute";
 import axios from "axios";
 import "./Main.scss";
-import TagFiltering from "../components/TagFiltering";
+import TagFiltering from "../components/TagList/TagFiltering";
 
 const { Option } = Select;
 
@@ -118,31 +118,9 @@ function Main({ imageUploader }) {
       setFiltered(false);
       return;
     }
-    // const matchedData = postData.filter(
-    //   (post) =>
-    //     post.tags && post.tags.some((tag) => tag === event.target.innerText)
-    // );
     const matchedData = postData.filter(
       (post) =>
-        post.tags &&
-        post.tags.some((tag) => {
-          const regExpSpecial =
-            /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;
-          const regExpKor = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
-          const regExpNum = /[0-9]/g;
-          const regExpEng = /[a-zA-Z]/g;
-          if (
-            tag != null &&
-            !regExpKor.test(tag) &&
-            !regExpNum.test(tag) &&
-            !regExpSpecial.test(tag) &&
-            regExpEng.test(tag)
-          ) {
-            return tag.toUpperCase() === event.target.innerText.toUpperCase();
-          } else {
-            return false;
-          }
-        })
+        post.tags && post.tags.some((tag) => tag === event.target.innerText)
     );
     setFilteringData(matchedData);
     setFiltered(true);
@@ -158,7 +136,10 @@ function Main({ imageUploader }) {
         imageUploader={imageUploader}
       />
       <Grass postData={postData} />
-      <TagFiltering onFiltering={handleFiltering} />
+      <TagFiltering
+        onFiltering={handleFiltering}
+        tags={data.map((item) => item.tags)}
+      />
       <section className="cardgrid">
         <div className="inner">
           <div className="cardheader">

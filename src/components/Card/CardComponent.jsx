@@ -78,8 +78,6 @@ function CardComponent(props) {
     });
   }
 
-  console.log(props);
-
   return (
     <>
       <Card
