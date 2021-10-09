@@ -69,7 +69,7 @@ function Main({ imageUploader }) {
     loader.current = load;
   }, [load]);
 
-  useEffect(() => {
+  useEffect(async () => {
     //searchTerm여부에 따라 전체검색 or 필터검색 실행
     searchTerm ? getFilterData() : getData();
   }, [searchTerm, searchType, postNum]);
