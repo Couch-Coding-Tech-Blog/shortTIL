@@ -17,79 +17,15 @@ function Main({ imageUploader }) {
   const [postNum, setPostNum] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchType, setSearchType] = useState("title");
-  const perPage = 12;
-  const [element, setElement] = useState(null);
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "start":
-        return { ...state, loading: true };
-      case "loaded":
-        return {
-          ...state,
-          loading: false,
-          data: [...state.data, ...action.newData],
-          more: action.newData.length === perPage,
-          after: state.after + action.newData.length,
-        };
-      default:
-        throw Error("Don't understand action");
-    }
-  };
-
-  const [state, dispatch] = useReducer(reducer, {
-    loading: false,
-    more: true,
-    data: [],
-    after: 0,
-  });
-  const load = () => {
-    dispatch({ type: "start" });
-    setTimeout(() => {
-      const newData = postData.slice(after, after + perPage);
-      dispatch({ type: "loaded", newData });
-    }, 300);
-  };
-
-  const { loading, data, after, more } = state;
-  const loader = useRef(load);
-
-  const observer = useRef(
-    new IntersectionObserver(
-      (entries) => {
-        const first = entries[0];
-        if (first.isIntersecting) {
-          loader.current();
-        }
-      },
-      { threshold: 1 }
-    )
-  );
-
-  useEffect(() => {
-    loader.current = load;
-  }, [load]);
 
   useEffect(async () => {
     //searchTerm여부에 따라 전체검색 or 필터검색 실행
     searchTerm ? getFilterData() : getData();
   }, [searchTerm, searchType, postNum]);
 
-  useEffect(() => {
-    const currentElement = element;
-    const currentObserver = observer.current;
-    if (currentElement) {
-      currentObserver.observe(currentElement);
-    }
-    return () => {
-      if (currentElement) {
-        currentObserver.unobserve(currentElement);
-      }
-    };
-  }, [element]);
-
   async function getData() {
     const res = await axios.get(
-      "http://localhost:4000/posts?_sort=id&_order=desc"
+      "http://localhost:4000/posts?_sort=id&_order=desc&${}"
     );
     setPostData(res.data);
   }
@@ -138,7 +74,7 @@ function Main({ imageUploader }) {
       <Grass postData={postData} />
       <TagFiltering
         onFiltering={handleFiltering}
-        tags={data.map((item) => item.tags)}
+        tags={postData.map((item) => item.tags)}
       />
       <section className="cardgrid">
         <div className="inner">
@@ -179,7 +115,7 @@ function Main({ imageUploader }) {
                 </>
               ) : (
                 <>
-                  {data.map((post) => (
+                  {postData.map((post) => (
                     <CardComponent
                       key={post.id}
                       id={post.id}
@@ -193,12 +129,6 @@ function Main({ imageUploader }) {
                 </>
               )}
             </div>
-            {loading && (
-              <div className="spin">
-                <Spin />
-              </div>
-            )}
-            {!loading && more && <div ref={setElement}></div>}
           </div>
         </div>
       </section>
