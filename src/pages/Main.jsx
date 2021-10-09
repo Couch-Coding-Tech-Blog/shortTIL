@@ -192,6 +192,7 @@ function Main({ imageUploader }) {
                       body={post.body}
                       imagefile={post.uploaded_images}
                       imageUploader={imageUploader}
+                      tags={post.tags}
                     ></CardComponent>
                   ))}
                 </>
@@ -205,6 +206,7 @@ function Main({ imageUploader }) {
                       body={post.body}
                       imagefile={post.uploaded_images}
                       imageUploader={imageUploader}
+                      tags={post.tags}
                     ></CardComponent>
                   ))}
                 </>
