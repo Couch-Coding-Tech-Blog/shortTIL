@@ -1,4 +1,4 @@
-# How to Execute the file  
+# How to Execute the Program 
 - Terminal 1  
 npm i  
 npx json-server ./db.json --port 4000  
