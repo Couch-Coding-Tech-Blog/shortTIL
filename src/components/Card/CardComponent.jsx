@@ -16,8 +16,8 @@ function CardComponent(props) {
   const [editing, setEditing] = useState(true);
 
   const ShowImages = () => {
-    console.log(props.imagefile);
-    if(!props.imagefile.length) return <></>
+    
+    if(props.imagefile === undefined) return <div></div>
     else {
       return <Carousel autoplay style={{ backgroundColor: "#0D6FFF"}}>
         {
