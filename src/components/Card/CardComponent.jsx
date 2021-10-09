@@ -88,6 +88,9 @@ function CardComponent(props) {
             <ShowImages></ShowImages>
             <h1>{props.title}</h1>
             <p>{props.body}</p>
+            <div style={{ marginBottom: "1rem", display: "flex" }}>
+              {props.tags.map((tag, idx) => <Button key={idx} type="primary" style={{ marginRight: "0.5rem" }}>#{tag}</Button>)}
+            </div>
             <div className="btnArea">
               <Button size="medium" onClick={() => setEditing(false)}>수정</Button>
               <Button size="medium" onClick={showDeleteConfirm} type="danger" ghost>삭제</Button>
@@ -98,8 +101,11 @@ function CardComponent(props) {
               <ShowImages></ShowImages>
               <Input defaultValue={`${props.title}`} />
               <TextArea defaultValue={`${props.body}`} />
+              <div style={{ marginBottom: "1rem", display: "flex" }}>
+              {props.tags.map((tag, idx) => <Button key={idx} type="primary">#{tag}</Button>)}
+            </div>
               <div className="btnArea">
-                <Button size="medium" onClick={onUpdate} type="primary">
+                <Button size="medium" onClick={onUpdate} type="primary" style={{ marginRight: "0.5rem" }}>
                   수정완료
                 </Button>
                 <Button size="medium" onClick={() => setEditing(true)} type="primary" ghost>
