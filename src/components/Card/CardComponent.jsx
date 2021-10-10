@@ -141,8 +141,8 @@ function CardComponent(props) {
         {editing ? (
           <div className="ModalEdit">
             <ShowImages></ShowImages>
-            <h1>{newTitle}</h1>
-            <p> {newBody}</p>
+            <h1>{props.title}</h1>
+            <p> {props.body}</p>
             <div style={{ marginBottom: "1rem", display: "flex" }}>
               {props.tags &&
                 props.tags.map((tag, idx) => (
