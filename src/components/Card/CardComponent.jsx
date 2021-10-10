@@ -15,16 +15,14 @@ function CardComponent(props) {
   const [postNum, setPostNum] = useState([]);
   const [editing, setEditing] = useState(true);
 
-<<<<<<< HEAD
-  // console.log((props.imagefile != undefined && props.imagefile[0]!=undefined) ? props.imagefile[0].url:null)
-=======
-  
   const [newTitle, setNewTitle] = useState(props.title);
   const [newBody, setNewBody] = useState(props.body);
 
-  console.log((props.imagefile != undefined && props.imagefile[0]!=undefined) ? props.imagefile[0].url:null)
->>>>>>> aea22d2399ebe16ec4f4d7736ab3076e08085275
-
+  console.log(
+    props.imagefile != undefined && props.imagefile[0] != undefined
+      ? props.imagefile[0].url
+      : null
+  );
 
   const ShowImages = () => {
     if (props.imagefile === undefined) return <div></div>;
@@ -42,9 +40,11 @@ function CardComponent(props) {
       );
     }
   };
-  
+
   const onChangeTitle = (event) => {
-    const {target: { value },} = event;
+    const {
+      target: { value },
+    } = event;
     setNewTitle(value);
   };
   const onChangeBody = (event) => {
@@ -55,12 +55,10 @@ function CardComponent(props) {
   };
 
   const onUpdate = async () => {
-    const res = await axios.patch(`http://localhost:4000/posts/${props.id}`,
-      {
-        title: newTitle,
-        body:  newBody,
-      }
-    );
+    const res = await axios.patch(`http://localhost:4000/posts/${props.id}`, {
+      title: newTitle,
+      body: newBody,
+    });
     console.log(res.data);
     setEditing(true);
     props.onUpdateMain();
@@ -112,7 +110,10 @@ function CardComponent(props) {
       </Card>
       <Modal
         visible={isModalVisible}
-        onCancel={() => {setIsModalVisible(false); setEditing(true);}}
+        onCancel={() => {
+          setIsModalVisible(false);
+          setEditing(true);
+        }}
         onOk={editing}
         footer={[]}
         centered
@@ -152,7 +153,7 @@ function CardComponent(props) {
           <div className="ModalEditForm">
             <ShowImages></ShowImages>
             <Input defaultValue={newTitle} onChange={onChangeTitle} />
-            <TextArea defaultValue={newBody} onChange={onChangeBody}/>
+            <TextArea defaultValue={newBody} onChange={onChangeBody} />
             <div style={{ marginBottom: "1rem", display: "flex" }}>
               {props.tags.map((tag, idx) => (
                 <Button key={idx} type="primary">
