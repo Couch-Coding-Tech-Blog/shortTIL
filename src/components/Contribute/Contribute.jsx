@@ -3,7 +3,7 @@ import { ResponsiveCalendar } from "@nivo/calendar";
 import moment from "moment";
 import "./style.scss";
 
-function Grass({ postData }) {
+function Contribute({ postData }) {
   const [grassData, setGrassData] = useState(false);
   //moment 현재 날짜
   const nowDate = moment().format("YYYY-MM-DD");
@@ -75,4 +75,4 @@ function Grass({ postData }) {
   );
 }
 
-export default Grass;
+export default Contribute;

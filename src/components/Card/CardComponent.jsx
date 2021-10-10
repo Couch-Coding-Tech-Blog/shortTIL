@@ -19,6 +19,15 @@ function CardComponent(props) {
 
 
 
+  const [newTitle, setNewTitle] = useState(props.title);
+  const [newBody, setNewBody] = useState(props.body);
+
+  console.log(
+    props.imagefile != undefined && props.imagefile[0] != undefined
+      ? props.imagefile[0].url
+      : null
+  );
+
   const ShowImages = () => {
     if (props.imagefile === undefined) return <div></div>;
     else {
@@ -36,12 +45,17 @@ function CardComponent(props) {
     }
   };
 
-  const onDel = async (newPost) => {
-    await axios.delete(`http://localhost:4000/posts/${props.id}`, {
-      ...newPost,
-    });
-    console.log("delete"); // 삭제 누르면 db에서 삭제는 되는데 뷰에서 삭제가 안됨
-    setEditing(true);
+  const onChangeTitle = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewTitle(value);
+  };
+  const onChangeBody = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewBody(value);
   };
 
   const onUpdate = async () => {
@@ -56,6 +70,7 @@ function CardComponent(props) {
     );
     setEditing(true); 
     props.editPostData(props.id,editTxt)
+
   };
 
 
@@ -72,7 +87,7 @@ function CardComponent(props) {
       centered: "yes",
       onOk() {
         // console.log('Yes');
-        onDel(true);
+        props.onDel(props);
         setEditing(true);
         setIsModalVisible(false);
       },
@@ -95,12 +110,16 @@ function CardComponent(props) {
     <>
       <Card
         hoverable
-        style={{ width: 300, margin: "1rem", height:300}}
+        style={{ width: 300, margin: "1rem", height: 300 }}
         cover={
           <img
             alt="example"
-            src={(props.imagefile != undefined && props.imagefile[0]!=undefined) ? props.imagefile[0].url:"https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1180&q=80"}
-            style={{objectFit:"cover", height:"100%",width:"100%"}}
+            src={
+              props.imagefile != undefined && props.imagefile[0] != undefined
+                ? props.imagefile[0].url
+                : "https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1180&q=80"
+            }
+            style={{ objectFit: "cover", height: "100%", width: "100%" }}
           />
         }
         onClick={() => setIsModalVisible(true)}
@@ -111,7 +130,10 @@ function CardComponent(props) {
       </Card>
       <Modal
         visible={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
+        onCancel={() => {
+          setIsModalVisible(false);
+          setEditing(true);
+        }}
         onOk={editing}
         footer={[]}
         centered
@@ -119,8 +141,8 @@ function CardComponent(props) {
         {editing ? (
           <div className="ModalEdit">
             <ShowImages></ShowImages>
-            <h1>{props.title}</h1>
-            <p>{props.body}</p>
+            <h1>{newTitle}</h1>
+            <p> {newBody}</p>
             <div style={{ marginBottom: "1rem", display: "flex" }}>
               {props.tags &&
                 props.tags.map((tag, idx) => (
@@ -152,6 +174,7 @@ function CardComponent(props) {
             <ShowImages></ShowImages>
             <Input onChange={(event)=>onchangeEditInput(event,"title")} defaultValue={`${props.title}`} />
             <TextArea onChange={(event)=>onchangeEditInput(event,"body")} defaultValue={`${props.body}`} />
+
             <div style={{ marginBottom: "1rem", display: "flex" }}>
               {props.tags.map((tag, idx) => (
                 <Button key={idx} type="primary">

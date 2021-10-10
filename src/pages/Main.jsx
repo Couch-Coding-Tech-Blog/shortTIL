@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useReducer } from "react";
 import { Layout, Button, Input, Select, Spin } from "antd";
 import { EditFilled } from "@ant-design/icons";
-import Navbar from "../components/Header/Header";
+import Header from "../components/Header/Header";
 import CardComponent from "../components/Card/CardComponent";
 import Grass from "../components/Contribute/Contribute";
 import axios from "axios";
@@ -19,7 +19,6 @@ function Main({ imageUploader }) {
   const [searchType, setSearchType] = useState("title");
 
   useEffect(async () => {
-    //searchTerm여부에 따라 전체검색 or 필터검색 실행
     searchTerm ? getFilterData() : getData();
   }, [searchTerm, searchType, postNum, postData]);
 
@@ -69,9 +68,25 @@ function Main({ imageUploader }) {
     setPostData(editPostData)
   }
 
+
+  
+  const onDel = async (newPost) => {
+    await axios.delete(`http://localhost:4000/posts/${newPost.id}`, {
+      ...newPost,
+    });
+    setPostNum(postNum - 1);
+    console.log("delete");
+    // setEditing(true);
+  };
+  
+
+  const onUpdateMain = () => {
+    getData()
+  };
+
   return (
     <>
-      <Navbar
+      <Header
         onAdd={onAdd}
         handleSearchChange={handleSearchChange}
         handleSelectChange={handleSelectChange}
@@ -118,6 +133,7 @@ function Main({ imageUploader }) {
                       imageUploader={imageUploader}
                       tags={post.tags}
                       editPostData={editPostData}
+
                     ></CardComponent>
                   ))}
                 </>
@@ -139,6 +155,14 @@ function Main({ imageUploader }) {
                 </>
               )}
             </div>
+            {/* {loading && (
+              <div className="spin">
+                <Spin />
+              </div>
+            )}
+            {!loading && more && (
+              <div style={{ backgroundColor: "green" }} ref={setElement}></div>
+            )} */}
           </div>
         </div>
       </section>
