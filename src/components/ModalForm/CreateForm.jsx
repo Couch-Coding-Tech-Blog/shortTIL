@@ -26,9 +26,6 @@ const CreateForm = ({ visible, onCreate, onCancel, imageUploader }) => {
       const value = tagsRef.current.state.value;
       setTags([...tags, value]);
       form.resetFields(["tags"]);
-      tagsRef.current.focus({
-        cursor: "start",
-      });
     }
   };
 
@@ -50,12 +47,12 @@ const CreateForm = ({ visible, onCreate, onCancel, imageUploader }) => {
   };
 
   const handleChange = async ({ fileList }) => {
+    setFileList(fileList);
     const newFileIndex = fileList.length - 1;
     const uploaded = await imageUploader.upload(
       fileList[newFileIndex].originFileObj
     );
     fileList[newFileIndex].url = uploaded.url;
-    setFileList(fileList);
   };
 
   const uploadButton = (
@@ -157,7 +154,7 @@ const CreateForm = ({ visible, onCreate, onCancel, imageUploader }) => {
           onPreview={handlePreview}
           onChange={handleChange}
         >
-          {fileList.length >= 8 ? null : uploadButton}
+          {fileList.length >= 4 ? null : uploadButton}
         </Upload>
         <Modal
           visible={previewVisible}
