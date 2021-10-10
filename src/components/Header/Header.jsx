@@ -4,10 +4,9 @@ import CreateForm from "../ModalForm/CreateForm";
 import "antd/dist/antd.css";
 import "./style.scss";
 
-const { Header } = Layout;
 const { Search } = Input;
 
-const Navbar = ({ onAdd, imageUploader }) => {
+const Header = ({ onAdd, imageUploader }) => {
   const [visible, setVisible] = useState(false);
 
   const showModal = () => {
@@ -56,7 +55,6 @@ const Navbar = ({ onAdd, imageUploader }) => {
         />
       </div>
     </div>
-  );
-};
+  )};
 
-export default Navbar;
+export default Header;
