@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import { Card, Modal, Button, Form, Input } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -10,12 +10,14 @@ const { confirm } = Modal;
 const { Meta } = Card;
 
 function CardComponent(props) {
+  
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { visible, loading } = useState(false);
   const [postNum, setPostNum] = useState([]);
   const [editing, setEditing] = useState(true);
+  const [editTxt, setEditTxt] = useState({title:"",body:""});
 
-  console.log((props.imagefile != undefined && props.imagefile[0]!=undefined) ? props.imagefile[0].url:null)
+
 
   const ShowImages = () => {
     if (props.imagefile === undefined) return <div></div>;
@@ -42,21 +44,22 @@ function CardComponent(props) {
     setEditing(true);
   };
 
-  const onUpdate = async (newPost) => {
+  const onUpdate = async () => {
+    console.log(editTxt)
+
     await axios.patch(
       `http://localhost:4000/posts/${props.id}`,
-      JSON.stringify({
-        data: {
-          id: "`${id}`",
-          title: "`${title}`",
-          body: "`${body}`",
-        },
-      })
+      {
+          title: editTxt.title,
+          body: editTxt.body,
+      }
     );
-    console.log("patch"); // 수정하면 db에 업로드가 안됨, 뷰에서도 수정되지 않음
-    setEditing(true); // 수정완료 누르면 이전 모달로 전환이 안됨
-    // 모달을 닫고 다시열면 수정상태 그대로 보임
+    setEditing(true); 
+    props.editPostData(props.id,editTxt)
   };
+
+
+
 
   function showDeleteConfirm() {
     confirm({
@@ -79,6 +82,14 @@ function CardComponent(props) {
       },
     });
   }
+
+  function onchangeEditInput(event,type){
+    let str = editTxt;
+    str[type] = event.target.value
+    setEditTxt(str);
+  }
+
+  
 
   return (
     <>
@@ -139,8 +150,8 @@ function CardComponent(props) {
         ) : (
           <div className="ModalEditForm">
             <ShowImages></ShowImages>
-            <Input defaultValue={`${props.title}`} />
-            <TextArea defaultValue={`${props.body}`} />
+            <Input onChange={(event)=>onchangeEditInput(event,"title")} defaultValue={`${props.title}`} />
+            <TextArea onChange={(event)=>onchangeEditInput(event,"body")} defaultValue={`${props.body}`} />
             <div style={{ marginBottom: "1rem", display: "flex" }}>
               {props.tags.map((tag, idx) => (
                 <Button key={idx} type="primary">

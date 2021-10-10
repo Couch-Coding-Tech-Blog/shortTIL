@@ -21,7 +21,7 @@ function Main({ imageUploader }) {
   useEffect(async () => {
     //searchTerm여부에 따라 전체검색 or 필터검색 실행
     searchTerm ? getFilterData() : getData();
-  }, [searchTerm, searchType, postNum]);
+  }, [searchTerm, searchType, postNum, postData]);
 
   async function getData() {
     const res = await axios.get(
@@ -61,6 +61,13 @@ function Main({ imageUploader }) {
     setFilteringData(matchedData);
     setFiltered(true);
   };
+  
+  const editPostData = (id,editTxt) =>{
+    let editIndex = postData.findIndex((post)=>post.id == id)
+    let editPostData = postData;
+    editPostData[editIndex] = {...editPostData[editIndex],title:editTxt.title, body:editTxt.body}
+    setPostData(editPostData)
+  }
 
   return (
     <>
@@ -110,6 +117,7 @@ function Main({ imageUploader }) {
                       imagefile={post.uploaded_images}
                       imageUploader={imageUploader}
                       tags={post.tags}
+                      editPostData={editPostData}
                     ></CardComponent>
                   ))}
                 </>
@@ -124,6 +132,8 @@ function Main({ imageUploader }) {
                       imagefile={post.uploaded_images}
                       imageUploader={imageUploader}
                       tags={post.tags}
+                      editPostData={editPostData}
+
                     ></CardComponent>
                   ))}
                 </>
