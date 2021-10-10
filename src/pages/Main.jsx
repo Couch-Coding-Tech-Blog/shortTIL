@@ -19,7 +19,6 @@ function Main({ imageUploader }) {
   const [searchType, setSearchType] = useState("title");
 
   useEffect(async () => {
-    //searchTerm여부에 따라 전체검색 or 필터검색 실행
     searchTerm ? getFilterData() : getData();
   }, [searchTerm, searchType, postNum]);
 
@@ -129,6 +128,14 @@ function Main({ imageUploader }) {
                 </>
               )}
             </div>
+            {/* {loading && (
+              <div className="spin">
+                <Spin />
+              </div>
+            )}
+            {!loading && more && (
+              <div style={{ backgroundColor: "green" }} ref={setElement}></div>
+            )} */}
           </div>
         </div>
       </section>
