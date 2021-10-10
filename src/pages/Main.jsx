@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useReducer } from "react";
 import { Layout, Button, Input, Select, Spin } from "antd";
 import { EditFilled } from "@ant-design/icons";
-import Navbar from "../components/Header/Header";
+import Header from "../components/Header/Header";
 import CardComponent from "../components/Card/CardComponent";
 import Grass from "../components/Contribute/Contribute";
 import axios from "axios";
@@ -64,7 +64,7 @@ function Main({ imageUploader }) {
 
   return (
     <>
-      <Navbar
+      <Header
         onAdd={onAdd}
         handleSearchChange={handleSearchChange}
         handleSelectChange={handleSelectChange}
