@@ -62,7 +62,8 @@ function Main({ imageUploader }) {
     setFiltered(true);
   };
 
-  // 삭제
+
+  
   const onDel = async (newPost) => {
     await axios.delete(`http://localhost:4000/posts/${newPost.id}`, {
       ...newPost,
@@ -71,17 +72,10 @@ function Main({ imageUploader }) {
     console.log("delete");
     // setEditing(true);
   };
+  
 
-  // 수정  
-  const onUpdate = async (newPost) => {
-    const editData = await axios.patch(`http://localhost:4000/posts/${newPost.id}`,
-      {
-        title: newPost.NewTitle,
-        body:  newPost.NewBody,
-      }
-    );
-    console.log(editData);
-    // setEditing(true);
+  const onUpdateMain = () => {
+    getData()
   };
 
   return (
@@ -132,8 +126,8 @@ function Main({ imageUploader }) {
                       imagefile={post.uploaded_images}
                       imageUploader={imageUploader}
                       tags={post.tags}
-                      onUpdate={onUpdate}
                       onDel={onDel}
+                      onUpdateMain={onUpdateMain}
                     ></CardComponent>
                   ))}
                 </>
@@ -148,8 +142,8 @@ function Main({ imageUploader }) {
                       imagefile={post.uploaded_images}
                       imageUploader={imageUploader}
                       tags={post.tags}
-                      onUpdate={onUpdate}
                       onDel={onDel}
+                      onUpdateMain={onUpdateMain}
                     ></CardComponent>
                   ))}
                 </>

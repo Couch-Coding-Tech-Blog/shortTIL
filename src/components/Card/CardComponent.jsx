@@ -15,7 +15,12 @@ function CardComponent(props) {
   const [postNum, setPostNum] = useState([]);
   const [editing, setEditing] = useState(true);
 
+  
+  const [newTitle, setNewTitle] = useState(props.title);
+  const [newBody, setNewBody] = useState(props.body);
+
   console.log((props.imagefile != undefined && props.imagefile[0]!=undefined) ? props.imagefile[0].url:null)
+
 
   const ShowImages = () => {
     if (props.imagefile === undefined) return <div></div>;
@@ -33,10 +38,7 @@ function CardComponent(props) {
       );
     }
   };
-
-  const [newTitle, setNewTitle] = useState(props.title);
-  const [newBody, setNewBody] = useState(props.body);
-
+  
   const onChangeTitle = (event) => {
     const {target: { value },} = event;
     setNewTitle(value);
@@ -46,6 +48,18 @@ function CardComponent(props) {
       target: { value },
     } = event;
     setNewBody(value);
+  };
+
+  const onUpdate = async () => {
+    const res = await axios.patch(`http://localhost:4000/posts/${props.id}`,
+      {
+        title: newTitle,
+        body:  newBody,
+      }
+    );
+    console.log(res.data);
+    setEditing(true);
+    props.onUpdateMain();
   };
 
   function showDeleteConfirm() {
@@ -99,7 +113,7 @@ function CardComponent(props) {
           <div className="ModalEdit">
             <ShowImages></ShowImages>
             <h1>{newTitle}</h1>
-            <p>{newBody}</p>
+            <p> {newBody}</p>
             <div style={{ marginBottom: "1rem", display: "flex" }}>
               {props.tags &&
                 props.tags.map((tag, idx) => (
@@ -141,7 +155,7 @@ function CardComponent(props) {
             <div className="btnArea">
               <Button
                 size="medium"
-                onClick={props.onUpdate()}
+                onClick={onUpdate}
                 type="primary"
                 style={{ marginRight: "0.5rem" }}
               >
