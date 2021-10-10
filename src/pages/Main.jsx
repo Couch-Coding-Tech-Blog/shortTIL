@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useReducer } from "react";
 import { Layout, Button, Input, Select, Spin } from "antd";
 import { EditFilled } from "@ant-design/icons";
-import Navbar from "../components/Header/Header";
+import Header from "../components/Header/Header";
 import CardComponent from "../components/Card/CardComponent";
 import Grass from "../components/Contribute/Contribute";
 import axios from "axios";
@@ -61,9 +61,25 @@ function Main({ imageUploader }) {
     setFiltered(true);
   };
 
+
+  
+  const onDel = async (newPost) => {
+    await axios.delete(`http://localhost:4000/posts/${newPost.id}`, {
+      ...newPost,
+    });
+    setPostNum(postNum - 1);
+    console.log("delete");
+    // setEditing(true);
+  };
+  
+
+  const onUpdateMain = () => {
+    getData()
+  };
+
   return (
     <>
-      <Navbar
+      <Header
         onAdd={onAdd}
         handleSearchChange={handleSearchChange}
         handleSelectChange={handleSelectChange}
@@ -109,6 +125,8 @@ function Main({ imageUploader }) {
                       imagefile={post.uploaded_images}
                       imageUploader={imageUploader}
                       tags={post.tags}
+                      onDel={onDel}
+                      onUpdateMain={onUpdateMain}
                     ></CardComponent>
                   ))}
                 </>
@@ -123,6 +141,8 @@ function Main({ imageUploader }) {
                       imagefile={post.uploaded_images}
                       imageUploader={imageUploader}
                       tags={post.tags}
+                      onDel={onDel}
+                      onUpdateMain={onUpdateMain}
                     ></CardComponent>
                   ))}
                 </>

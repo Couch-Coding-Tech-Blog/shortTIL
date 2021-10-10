@@ -15,7 +15,16 @@ function CardComponent(props) {
   const [postNum, setPostNum] = useState([]);
   const [editing, setEditing] = useState(true);
 
+<<<<<<< HEAD
   // console.log((props.imagefile != undefined && props.imagefile[0]!=undefined) ? props.imagefile[0].url:null)
+=======
+  
+  const [newTitle, setNewTitle] = useState(props.title);
+  const [newBody, setNewBody] = useState(props.body);
+
+  console.log((props.imagefile != undefined && props.imagefile[0]!=undefined) ? props.imagefile[0].url:null)
+>>>>>>> aea22d2399ebe16ec4f4d7736ab3076e08085275
+
 
   const ShowImages = () => {
     if (props.imagefile === undefined) return <div></div>;
@@ -33,29 +42,28 @@ function CardComponent(props) {
       );
     }
   };
-
-  const onDel = async (newPost) => {
-    await axios.delete(`http://localhost:4000/posts/${props.id}`, {
-      ...newPost,
-    });
-    console.log("delete"); // 삭제 누르면 db에서 삭제는 되는데 뷰에서 삭제가 안됨
-    setEditing(true);
+  
+  const onChangeTitle = (event) => {
+    const {target: { value },} = event;
+    setNewTitle(value);
+  };
+  const onChangeBody = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewBody(value);
   };
 
-  const onUpdate = async (newPost) => {
-    await axios.patch(
-      `http://localhost:4000/posts/${props.id}`,
-      JSON.stringify({
-        data: {
-          id: "`${id}`",
-          title: "`${title}`",
-          body: "`${body}`",
-        },
-      })
+  const onUpdate = async () => {
+    const res = await axios.patch(`http://localhost:4000/posts/${props.id}`,
+      {
+        title: newTitle,
+        body:  newBody,
+      }
     );
-    console.log("patch"); // 수정하면 db에 업로드가 안됨, 뷰에서도 수정되지 않음
-    setEditing(true); // 수정완료 누르면 이전 모달로 전환이 안됨
-    // 모달을 닫고 다시열면 수정상태 그대로 보임
+    console.log(res.data);
+    setEditing(true);
+    props.onUpdateMain();
   };
 
   function showDeleteConfirm() {
@@ -69,7 +77,7 @@ function CardComponent(props) {
       centered: "yes",
       onOk() {
         // console.log('Yes');
-        onDel(true);
+        props.onDel(props);
         setEditing(true);
         setIsModalVisible(false);
       },
@@ -104,7 +112,7 @@ function CardComponent(props) {
       </Card>
       <Modal
         visible={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
+        onCancel={() => {setIsModalVisible(false); setEditing(true);}}
         onOk={editing}
         footer={[]}
         centered
@@ -112,8 +120,8 @@ function CardComponent(props) {
         {editing ? (
           <div className="ModalEdit">
             <ShowImages></ShowImages>
-            <h1>{props.title}</h1>
-            <p>{props.body}</p>
+            <h1>{newTitle}</h1>
+            <p> {newBody}</p>
             <div style={{ marginBottom: "1rem", display: "flex" }}>
               {props.tags &&
                 props.tags.map((tag, idx) => (
@@ -143,8 +151,8 @@ function CardComponent(props) {
         ) : (
           <div className="ModalEditForm">
             <ShowImages></ShowImages>
-            <Input defaultValue={`${props.title}`} />
-            <TextArea defaultValue={`${props.body}`} />
+            <Input defaultValue={newTitle} onChange={onChangeTitle} />
+            <TextArea defaultValue={newBody} onChange={onChangeBody}/>
             <div style={{ marginBottom: "1rem", display: "flex" }}>
               {props.tags.map((tag, idx) => (
                 <Button key={idx} type="primary">
